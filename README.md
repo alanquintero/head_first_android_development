@@ -1,7 +1,7 @@
 # Head First Android Development
 This repository contains the exercises of the **Head First Android Development, 2nd Edition** book.
 
-This a personal repository used to saved my exercises.
+This is a personal repository used to saved my exercises, you can use it as a reference if you like.
 
 ## Information about the book
 - *Title*: Head First Android Development, 2nd Edition

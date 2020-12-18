@@ -1,7 +1,9 @@
 # Head First Android Development
 This repository contains the exercises of the **Head First Android Development, 2nd Edition** book.
 
-## Information about the book.
+This a personal repository used to saved my exercises.
+
+## Information about the book
 - *Title*: Head First Android Development, 2nd Edition
 - *Author(s)*: Dawn Griffiths, David Griffiths
 - *Release date*: August 2017

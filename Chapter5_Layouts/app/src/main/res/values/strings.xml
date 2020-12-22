@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">Chapter5_Layouts</string>
-    <string name="to">To</string>
-    <string name="message">Message</string>
-    <string name="send">Send</string>
 </resources>

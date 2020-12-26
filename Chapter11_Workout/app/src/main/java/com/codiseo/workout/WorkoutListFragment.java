@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 public class WorkoutListFragment extends ListFragment {
 
-    static interface Listener {
+    interface Listener {
         void itemClicked(long ig);
     }
 

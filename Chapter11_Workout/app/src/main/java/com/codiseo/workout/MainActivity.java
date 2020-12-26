@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutListFragme
     @Override
     public void itemClicked(long id) {
         View fragmentContainer = findViewById(R.id.fragment_container);
+        // large screens
         if(fragmentContainer != null) {
             WorkoutDetailFragment details = new WorkoutDetailFragment();
 
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutListFragme
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.addToBackStack(null);
             ft.commit();
-        } else{
+        } else {
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(DetailActivity.EXTRA_WORKOUT_ID, (int) id);
             startActivity(intent);

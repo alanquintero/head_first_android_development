@@ -1,12 +1,16 @@
 package com.codiseo.joke;
 
 import android.app.IntentService;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
 
 public class DelayedMessageService extends IntentService {
 
     public static final String EXTRA_MESSAGE = "message";
+    public static final int NOTIFICATION_ID = 5453;
 
     public DelayedMessageService() {
         super("DelayedMessageService");
@@ -17,7 +21,7 @@ public class DelayedMessageService extends IntentService {
         synchronized (this) {
             try {
                 wait(10000);
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -26,6 +30,27 @@ public class DelayedMessageService extends IntentService {
     }
 
     private void showText(String text) {
-        Log.v("DelayedMessageService", "The message is: " + text);
+        //Create a notification builder
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(android.R.drawable.sym_def_app_icon)
+                .setContentTitle(getString(R.string.question))
+                .setContentText(text)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVibrate(new long[]{0, 1000})
+                .setAutoCancel(true);
+
+        //Create an action
+        Intent actionIntent = new Intent(this, MainActivity.class);
+        PendingIntent actionPendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                actionIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        builder.setContentIntent(actionPendingIntent);
+
+        //Issue the notification
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 }

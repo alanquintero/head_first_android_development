@@ -17,9 +17,6 @@ import android.widget.Toast;
 
 public class TopLevelActivity extends AppCompatActivity {
 
-    private SQLiteDatabase db;
-    private Cursor favoritesCursor;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,21 +42,7 @@ public class TopLevelActivity extends AppCompatActivity {
 
     private void setupFavoritesListView() {
         ListView listFavorites = findViewById(R.id.list_favorites);
-        try {
-            SQLiteOpenHelper starbuzzDatabaseHelper = new StarbuzzDatabaseHelper(this);
-            db = starbuzzDatabaseHelper.getReadableDatabase();
-            favoritesCursor = db.query("DRINK", new String[]{"_id", "NAME"}, "FAVORITE = 1", null, null, null, null);
-            CursorAdapter favoriteAdapter = new SimpleCursorAdapter(TopLevelActivity.this,
-                    android.R.layout.simple_list_item_1,
-                    favoritesCursor,
-                    new String[]{"NAME"},
-                    new int[]{android.R.id.text1, 0}
-            );
-            listFavorites.setAdapter(favoriteAdapter);
-        } catch (SQLException e) {
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
-        }
+        new GetFavoriteDrinksTask(this, listFavorites).execute();
 
         listFavorites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -74,17 +57,12 @@ public class TopLevelActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        Cursor newCursor = db.query("DRINK", new String[] {"_id", "NAME"}, "FAVORITE = 1", null, null, null, null);
         ListView listFavorites = findViewById(R.id.list_favorites);
-        CursorAdapter adapter = (CursorAdapter) listFavorites.getAdapter();
-        adapter.changeCursor(newCursor);
-        favoritesCursor = newCursor;
+        new GetFavoriteDrinksTask(this, listFavorites).execute();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        favoritesCursor.close();
-        db.close();
     }
 }
